@@ -42,6 +42,7 @@
 				visibility: hidden;
 			}
 		</style>
+		<script src="angular.js"></script>
 		<!-- <script src="https://code.jquery.com/jquery-1.12.0.js">
 			$('.button-free').click(function(){
 				$.ajax(
