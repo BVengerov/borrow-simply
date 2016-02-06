@@ -1,6 +1,6 @@
 (function() {
 
-	var app = angular.module("borrowsimply", ["ngRoute"]);
+	var app = angular.module("borrowsimply");
 
 	var $baseUrl = "services/";
 
@@ -40,16 +40,6 @@
 			//item.status = "Taken by vengerov";
 		//	itemsService.takeItem();
 		//};
-	});
-
-	app.config(function($routeProvider){
-		$routeProvider
-		.when("/main", {
-			templateUrl: "main.html",
-			controller: "MainController",
-			controllerAs: 'MainCtrl'
-		})
-		.otherwise({redirectTo: "/main"})
 	});
 })();
 
