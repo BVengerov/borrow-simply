@@ -1,5 +1,5 @@
 <?php
-	namespace Home;
+
 	class DbObj
 	{
 		private $_host = '127.0.0.1';
@@ -13,6 +13,19 @@
 		{
 			$this->_connectToDb();
 			$this->_selectDb();
+		}
+
+		public function getRows()
+		{
+			$result = [];
+			// Performing SQL query
+			$query = 'SELECT * FROM phones_list';
+			$this->_table = $this->_makeQuery($query);
+			while ($row = $this->_fetchRow($this->_table)) {
+			    $result[] = $row;
+			}
+			$this->_killSelf();
+			return $result;
 		}
 
 		public function drawTable()
@@ -39,13 +52,9 @@
 		// Connecting, selecting database
 		private function _connectToDb()
 		{
-			$link = $this->_dbLink;
-			if (!is_null($link) && !mysql_ping($link))
-			{
-				$this->_dbLink = $this->_connectToDb();
-			}
-			return (mysql_connect($this->_host, $this->_login, $this->_password)
-				or die('Could not connect: ' . mysql_error()));
+			$this->_dbLink = mysql_connect($this->_host, $this->_login, $this->_password)
+				or die('Could not connect: ' . mysql_error());
+			return $this->_dbLink;
 		}
 
 		private function _selectDb()

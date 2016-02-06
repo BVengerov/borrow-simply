@@ -4,7 +4,8 @@
 ?>
 
 <html>
-<head>
+<head lang='en'>
+	<meta charset='UTF-8'>
 	<title>...</title>
 		<style>
 			table {
@@ -42,6 +43,8 @@
 				visibility: hidden;
 			}
 		</style>
+		<script src="angular.js"></script>
+		<script src="app.js"></script>
 		<!-- <script src="https://code.jquery.com/jquery-1.12.0.js">
 			$('.button-free').click(function(){
 				$.ajax(
@@ -58,16 +61,13 @@
 		</script> -->
 	</head>
 <body>
-<?php
+	<?php
 
-	/* TODO:
-		Перевести Table на mysqli
-	*/
-	$table = new DbObj();
-
-
-
-	$table->drawTable();
-?>
+		/* TODO:
+			Перевести Table на mysqli
+		*/
+		$table = new DbObj();
+		$table->drawTable();
+	?>
 </body>
 </html>

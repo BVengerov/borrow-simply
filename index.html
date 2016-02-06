@@ -1,0 +1,64 @@
+<html>
+<head lang='en'>
+	<meta charset='UTF-8'>
+	<title>Phones</title>
+		<style>
+			table {
+				margin: 8px;
+				background-color: linen;
+				margin: auto;
+				text-align: center
+			}
+
+			.table-title td {
+				text-transform: uppercase;
+				font-weight: bold;
+			}
+
+			td {
+				font-family: Lucida Console;
+				font-size: .7em;
+				border: 1px solid #DDD;
+			}
+
+			button {
+				text-align: center;
+				width: 60px;
+			}
+
+			.button-free {
+				content: 'Take phone';
+				color: green;
+				font-weight: bold;
+			}
+
+		</style>
+		<script src="angular.js"></script>
+		<script src="app.js"></script>
+	</head>
+<body ng-app="borrowsimply">
+	<div ng-controller="ItemController as itemCtrl">
+		<table>
+			<tr class="table-title">
+				<td>ID</td>
+				<td>Phone_name</td>
+				<td>OS</td>
+				<td>Status</td>
+				<td>actions</td>
+				<td>Comments</td>
+			</tr>
+			<tr ng-repeat="p in itemCtrl.phones">
+				<td>{{ p.id }}</td>
+				<td>{{ p.name }}</td>
+				<td>{{ p.os }}</td>
+				<td>{{ p.status }}</td>
+				<td>
+					<button class='button-free' ng-show="p.status == 'Free'" ng-click='itemCtrl.takeItem(p)'>Take</button>
+					<button class='button-taken' disabled ng-hide="p.status == 'Free'">Taken</button>
+				</td>
+				<td>{{ p.comments }}</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
