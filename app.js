@@ -1,6 +1,6 @@
 (function() {
 
-	var app = angular.module("borrowsimply");
+	var app = angular.module("borrowsimply", []);
 
 	var $baseUrl = "services/";
 
@@ -9,14 +9,13 @@
 			getItems: function() {
 				return $http.get($baseUrl + "getItems.php");
 			},
-			takeItem: function(id) {
+			takeItem: function(item) {
 				$http({
 				    method: "POST",
 				    url: $baseUrl + "takeItem.php",
-				    data: "id" + id,
-				    headers: {"Content-Type": "application/x-www-form-urlencoded"}
+					 data: item.id,
+					 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 				});
-				//return $http.post($baseUrl + "takeItem.php", {"id": id});
 			}
 		};
 	});
@@ -25,13 +24,19 @@
 
 		var that = this;
 
-		itemsService.getItems().success(function(data) {
-			that.phones = data;
-		});
+		var getItems = function()
+		{
+				itemsService.getItems().success(function(data) {
+				that.phones = data;
+			});
+		}
 
 		that.takeItem = function(item) {
-			itemsService.takeItem(item.id);
+			itemsService.takeItem(item);
+			getItems();
 		};
+
+		getItems();
 		//{
 			//TODO reloading for all the clients
 			//TODO add changing the real status in MySQL

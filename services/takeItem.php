@@ -2,10 +2,9 @@
 
 require_once('../classes/ItemRepository.php');
 
-header('Content-type: application/json');
 
-//For security reasons, will be automatically stripped by AngularJS
-echo ")]}'\n";
+$postdata = file_get_contents("php://input");
+$data = json_decode($postdata);
+ItemRepository::takeItem($data, 'vengerov');
 
-ItemRepository::takeItem($_POST['id']);
 ?>

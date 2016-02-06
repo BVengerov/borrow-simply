@@ -28,25 +28,14 @@
 			return $result;
 		}
 
-		public function drawTable()
+		public function takeItem($id, $username)
 		{
-			// Performing SQL query
-			$query = 'SELECT * FROM phones_list';
-			$this->_table = $this->_makeQuery($query);
-			//Printing results in HTML
-			echo "<table>\n";
-			while ($row = $this->_fetchRow($this->_table)) {
-			    echo "\t<tr>\n";
-			    foreach ($row as $data) {
-			        echo "\t\t<td>$data</td>\n";
-			    }
-			    echo "\t\t<td>
-			    			<button class='button-free'>Take</button>
-			    			<button class='button-disabled' disabled>Not available</button>
-			    		</td>\n";
-			    echo "\t</tr>\n";
-			}
-			echo "</table>\n";
+			$result = $this->_makeQuery(
+				"UPDATE phones_list SET Status='Taken by $username' WHERE Status='Free' AND ID = $id"
+				);
+
+			$this->_killSelf();
+			return $result;
 		}
 
 		// Connecting, selecting database
@@ -76,7 +65,10 @@
 		private function _killSelf()
 		{
 			//Free resultset
-			mysql_freeresult($this->_table);
+			if (!is_null($this->_table))
+			{
+				mysql_freeresult($this->_table);
+			};
 			// Closing connection
 			mysql_close($this->_dbLink);
 		}

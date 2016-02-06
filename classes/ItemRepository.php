@@ -35,4 +35,10 @@ class ItemRepository
 		}
 		return self::$items;
 	}
+
+	public static function takeItem($id, $username)
+	{
+		$db = new DbObj;
+		$dbRows = $db->takeItem($id, $username);
+	}
 }
