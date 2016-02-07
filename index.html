@@ -18,15 +18,15 @@
 				<td>actions</td>
 				<td>Comments</td>
 			</tr>
-			<tr ng-repeat="p in itemCtrl.phones">
+			<tr ng-repeat="p in items">
 				<td>{{ p.id }}</td>
 				<td>{{ p.name }}</td>
 				<td>{{ p.os }}</td>
-				<td>{{ p.status }}</td>
+				<td>{{ getStatus(p) }}</td>
 				<td>
-					<button class='button-free' ng-show="p.status == 'Free'" ng-click='itemCtrl.takeItem(p)'>Take</button>
+					<button class='button-free' ng-show="p.status == 'Free'" ng-click='takeItem(p)'>Take</button>
 					<button class='button-taken' disabled ng-hide="p.status == 'Free'">Taken</button>
-					<button class='button-release' ng-click="itemCtrl.freeItem(p)" ng-hide="p.status == 'Free'">Free phone</button>
+					<button class='button-release' ng-click="freeItem(p)" ng-hide="p.status == 'Free'">Free phone</button>
 				</td>
 				<td>{{ p.comments }}</td>
 			</tr>

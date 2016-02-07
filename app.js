@@ -32,32 +32,50 @@
 		};
 	});
 
-	app.controller("ItemController", function(itemsService) {
-
-		var that = this;
+	app.controller("ItemController", function($scope, itemsService, $interval) {
 
 		var getItems = function() {
 				itemsService.getItems().success(function(data) {
-				that.phones = data;
-			});
+					if ($scope.items != data)
+					{
+						$scope.items = data;
+					}
+				});
 		}
 
-		that.takeItem = function(item) {
+		$scope.takeItem = function(item) {
 			itemsService.takeItem(item).success(getItems);
 		};
 
-		that.freeItem = function(item) {
+		$scope.freeItem = function(item) {
 			itemsService.freeItem(item).success(getItems);
 		};
 
+		$scope.getStatus = function(item) {
+			var status = item.status;
+			if (status == "Free") {
+				return status;
+			}
+			else {
+				var date = new Date(item.date);
+				var hh = date.getHours();
+				var mm = date.getMinutes();
+				var hhmm = hh + ":" + mm;
+				var dd = date.getDate();
+				var mm = date.getMonth() + 1;
+				var yyyy = date.getFullYear();
+				var ddmmyyyy = dd + "/" + mm + "/" + yyyy;
+
+				return status + " at " + hhmm + " on " + ddmmyyyy;
+			}
+		}
+
+		//TODO reloading for all the clients
+		$interval(function() {
+			getItems();
+		}, 1000);
+
 		getItems();
-		//{
-			//TODO reloading for all the clients
-			//TODO add timepoint to the string
-			//TODO add a check for whether the item has really been taken via SQL transaction
-			//item.status = "Taken by vengerov";
-		//	itemsService.takeItem();
-		//};
 	});
 })();
 
