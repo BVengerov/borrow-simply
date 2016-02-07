@@ -13,13 +13,15 @@ class Item
 	$name = '',
 	$os = '',
 	$status = '',
-	$comment = ''
+	$date = '',
+	$comments = ''
 	)
 	{
 		$this->id = $id;
 		$this->name = $name;
 		$this->os = $os;
 		$this->status = $status;
-		$this->comment = $comment;
+		$this->date = $date;
+		$this->comments = $comments;
 	}
 }

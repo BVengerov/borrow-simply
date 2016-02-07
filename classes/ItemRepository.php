@@ -5,13 +5,21 @@ require_once("Item.php");
 
 class ItemRepository
 {
+	private static $db = null;
 	private static $items = array();
+
+	private static function _getDb()
+	{
+		if (is_null(self::$db))
+		{
+			self::$db = new DbObj;
+		}
+		return self::$db;
+	}
 
 	protected static function init()
 	{
-		$db = new DbObj;
-		$dbRows = $db->getRows();
-
+		$dbRows = self::_getDb()->getRows();
 		$dbData = array();
 		foreach ($dbRows as $row)
 		{
@@ -20,7 +28,9 @@ class ItemRepository
 						$row['ID'],
 						$row['Phone_name'],
 						$row['OS'],
-						$row['Status']
+						$row['Status'],
+						$row['Date'],
+						$row['Comments']
 				)
 			);
 		}
@@ -29,16 +39,21 @@ class ItemRepository
 
 	public static function getItems()
 	{
-		if (count(self::$items) === 0)
-		{
-			self::init();
-		}
+		self::init();
 		return self::$items;
 	}
 
-	public static function takeItem($id, $username)
+	public static function takeItem($id, $status)
 	{
-		$db = new DbObj;
-		$dbRows = $db->takeItem($id, $username);
+		$db = self::_getDb();
+		$result = $db->takeItem($id, $status);
+		return $result;
+	}
+
+	public static function freeItem($id)
+	{
+		$db = self::_getDb();
+		$result = $db->freeItem($id, 'Free');
+		return $result;
 	}
 }

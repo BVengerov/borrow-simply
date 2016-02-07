@@ -26,6 +26,7 @@
 				<td>
 					<button class='button-free' ng-show="p.status == 'Free'" ng-click='itemCtrl.takeItem(p)'>Take</button>
 					<button class='button-taken' disabled ng-hide="p.status == 'Free'">Taken</button>
+					<button class='button-release' ng-click="itemCtrl.freeItem(p)" ng-hide="p.status == 'Free'">Free phone</button>
 				</td>
 				<td>{{ p.comments }}</td>
 			</tr>

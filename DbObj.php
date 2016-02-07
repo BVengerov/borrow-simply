@@ -28,10 +28,20 @@
 			return $result;
 		}
 
-		public function takeItem($id, $username)
+		public function takeItem($id, $status)
 		{
 			$result = $this->_makeQuery(
-				"UPDATE phones_list SET Status='Taken by $username' WHERE Status='Free' AND ID = $id"
+				"UPDATE phones_list SET Status = '$status', Date = NOW() WHERE Status='Free' AND ID = $id"
+				);
+
+			$this->_killSelf();
+			return $result;
+		}
+
+		public function freeItem($id, $status)
+		{
+			$result = $this->_makeQuery(
+				"UPDATE phones_list SET Status='$status', Date = NOW() WHERE Status!='Free' AND ID = $id"
 				);
 
 			$this->_killSelf();
