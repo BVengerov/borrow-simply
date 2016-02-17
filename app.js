@@ -36,7 +36,8 @@
 
 		var getItems = function() {
 				itemsService.getItems().success(function(data) {
-					if ($scope.items != data)
+					//Updating model on change only
+					if (!angular.equals($scope.items, data))
 					{
 						$scope.items = data;
 					}
