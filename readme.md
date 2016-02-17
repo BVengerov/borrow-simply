@@ -4,7 +4,8 @@ borrow-simply
 What is this?
 -----
 
-The goal of this web-app is to provide simple yet functional interface for "borrowing" things, stored in DB. In example this is being created for, a bunch of test phones is shared by a group of users. For them to track phones an app (this app) can be used, so that every member of the group can see which items are available or who took them (and when), or take the items themselves.
+This is a web-app which goal is to provide simple yet functional interface for "borrowing" things that are stored in DB.
+Currently those things are a bunch of test phones is shared by a group of users. Thus, the app can be used for tracking the items, so that people involved can see which items are available or who took them (and when), or take the items themselves.
 
 Prerequisites
 -----
