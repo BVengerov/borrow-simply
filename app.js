@@ -57,16 +57,21 @@
 				return status;
 			}
 			else {
+				// Format date into readable format
 				var date = new Date(item.date);
 				var hh = date.getHours();
 				var mm = date.getMinutes();
+				if (mm < 10) {
+				    mm = '0' + mm
+				}
 				var hhmm = hh + ":" + mm;
-				var dd = date.getDate();
-				var mm = date.getMonth() + 1;
-				var yyyy = date.getFullYear();
-				var ddmmyyyy = dd + "/" + mm + "/" + yyyy;
 
-				return status + " at " + hhmm + " on " + ddmmyyyy;
+				var dd = date.getDate();
+				var nn = date.getMonth() + 1;
+				var yyyy = date.getFullYear();
+				var ddnnyyyy = dd + "/" + nn + "/" + yyyy;
+
+				return status + " at " + hhmm + " on " + ddnnyyyy;
 			}
 		}
 
