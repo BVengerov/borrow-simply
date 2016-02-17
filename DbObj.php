@@ -1,5 +1,5 @@
 <?php
-	namespace Home;
+
 	class DbObj
 	{
 		private $_host = '127.0.0.1';
@@ -15,37 +15,45 @@
 			$this->_selectDb();
 		}
 
-		public function drawTable()
+		public function getRows()
 		{
+			$result = [];
 			// Performing SQL query
 			$query = 'SELECT * FROM phones_list';
 			$this->_table = $this->_makeQuery($query);
-			//Printing results in HTML
-			echo "<table>\n";
 			while ($row = $this->_fetchRow($this->_table)) {
-			    echo "\t<tr>\n";
-			    foreach ($row as $data) {
-			        echo "\t\t<td>$data</td>\n";
-			    }
-			    echo "\t\t<td>
-			    			<button class='button-free'>Take</button>
-			    			<button class='button-disabled' disabled>Not available</button>
-			    		</td>\n";
-			    echo "\t</tr>\n";
+			    $result[] = $row;
 			}
-			echo "</table>\n";
+			$this->_killSelf();
+			return $result;
+		}
+
+		public function takeItem($id, $status)
+		{
+			$result = $this->_makeQuery(
+				"UPDATE phones_list SET Status = '$status', Date = NOW() WHERE Status='Free' AND ID = $id"
+				);
+
+			$this->_killSelf();
+			return $result;
+		}
+
+		public function freeItem($id, $status)
+		{
+			$result = $this->_makeQuery(
+				"UPDATE phones_list SET Status='$status', Date = NOW() WHERE Status!='Free' AND ID = $id"
+				);
+
+			$this->_killSelf();
+			return $result;
 		}
 
 		// Connecting, selecting database
 		private function _connectToDb()
 		{
-			$link = $this->_dbLink;
-			if (!is_null($link) && !mysql_ping($link))
-			{
-				$this->_dbLink = $this->_connectToDb();
-			}
-			return (mysql_connect($this->_host, $this->_login, $this->_password)
-				or die('Could not connect: ' . mysql_error()));
+			$this->_dbLink = mysql_connect($this->_host, $this->_login, $this->_password)
+				or die('Could not connect: ' . mysql_error());
+			return $this->_dbLink;
 		}
 
 		private function _selectDb()
@@ -67,7 +75,10 @@
 		private function _killSelf()
 		{
 			//Free resultset
-			mysql_freeresult($this->_table);
+			if (!is_null($this->_table))
+			{
+				mysql_freeresult($this->_table);
+			};
 			// Closing connection
 			mysql_close($this->_dbLink);
 		}

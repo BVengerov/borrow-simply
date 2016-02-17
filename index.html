@@ -1,0 +1,36 @@
+<html ng-app="borrowsimply">
+<head lang='en'>
+	<meta charset='UTF-8'>
+	<title>Phones</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="angular.js"></script>
+		<script src="angular-route.js"></script>
+		<script src="app.js"></script>
+	</head>
+<body ng-app="borrowsimply">
+	<div ng-controller="ItemController as itemCtrl">
+		<table>
+			<tr class="table-title">
+				<td>ID</td>
+				<td>Phone_name</td>
+				<td>OS</td>
+				<td>Status</td>
+				<td>actions</td>
+				<td>Comments</td>
+			</tr>
+			<tr ng-repeat="p in items">
+				<td>{{ p.id }}</td>
+				<td>{{ p.name }}</td>
+				<td>{{ p.os }}</td>
+				<td>{{ getStatus(p) }}</td>
+				<td>
+					<button class='button-free' ng-show="p.status == 'Free'" ng-click='takeItem(p)'>Take</button>
+					<button class='button-taken' disabled ng-hide="p.status == 'Free'">Taken</button>
+					<button class='button-release' ng-click="freeItem(p)" ng-hide="p.status == 'Free'">Free phone</button>
+				</td>
+				<td>{{ p.comments }}</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

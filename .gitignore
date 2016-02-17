@@ -2,6 +2,7 @@
 .phpintel
 ftpsync.settings
 angular.js
+angular-route.js
 
 # Compiled source #
 ###################
