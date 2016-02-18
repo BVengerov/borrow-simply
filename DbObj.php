@@ -34,6 +34,11 @@
 				"UPDATE phones_list SET Status = '$status', Date = NOW() WHERE Status='Free' AND ID = $id"
 				);
 
+			echo $result;
+			if (!$result || mysql_affected_rows() === 0)
+			{
+				return header("HTTP/1.1 500 Internal Server Error");
+			}
 			$this->_killSelf();
 			return $result;
 		}

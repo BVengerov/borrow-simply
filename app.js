@@ -8,7 +8,10 @@
 	app.factory("itemsService", function($http) {
 		return {
 			getItems: function() {
-				return $http.get($baseUrl + "getItems.php");
+				return $http({
+				    method: "GET",
+				    url: $baseUrl + "getItems.php"
+				});
 			},
 			takeItem: function(item) {
 				return $http({
@@ -32,24 +35,27 @@
 		};
 	});
 
-	app.controller("ItemController", function($scope, itemsService, $interval) {
+	app.controller("ItemController", function($scope, itemsService, $interval, $window) {
 
 		var getItems = function() {
-				itemsService.getItems().success(function(data) {
+				itemsService.getItems().then(function(response) {
 					//Updating model on change only
-					if (!angular.equals($scope.items, data))
+					if (!angular.equals($scope.items, response.data))
 					{
-						$scope.items = data;
+						$scope.items = response.data;
 					}
 				});
 		}
 
 		$scope.takeItem = function(item) {
-			itemsService.takeItem(item).success(getItems);
+			itemsService.takeItem(item).then(getItems, function(response) {
+				getItems();
+				$window.alert("Oops! Something went wrong :-( Please check if the item is available or try again later.");
+			});
 		};
 
 		$scope.freeItem = function(item) {
-			itemsService.freeItem(item).success(getItems);
+			itemsService.freeItem(item).then(getItems);
 		};
 
 		$scope.getStatus = function(item) {
