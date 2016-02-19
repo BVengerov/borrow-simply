@@ -18,13 +18,17 @@
 				<td>actions</td>
 				<td>Comments</td>
 			</tr>
+			<div class="styled-select">
+				<select ng-options="user as user.login for user in users" value="{{ user.id }}" ng-model="selectedUser">{{ user.login }}</option>
+			</div>
+			</select>
 			<tr ng-repeat="p in items">
 				<td>{{ p.id }}</td>
 				<td>{{ p.name }}</td>
 				<td>{{ p.os }}</td>
 				<td>{{ getStatus(p) }}</td>
 				<td>
-					<button class='button-free' ng-show="p.status == 'Free'" ng-click='takeItem(p)'>Take</button>
+					<button class='button-free' ng-show="p.status == 'Free'" ng-click='takeItem(p, selectedUser.login)'>Take</button>
 					<button class='button-taken' disabled ng-hide="p.status == 'Free'">Taken</button>
 					<button class='button-release' ng-click="freeItem(p)" ng-hide="p.status == 'Free'">Free phone</button>
 				</td>

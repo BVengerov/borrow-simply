@@ -3,8 +3,8 @@
 	class DbObj
 	{
 		private $_host = '127.0.0.1';
-		private $_login ='root';
-		private $_password = '';
+		private $_login ='bvengerov';
+		private $_password = 'root';
 		private $_tableName ='items';
 		private $_dbLink;
 		private $_table;
@@ -21,7 +21,8 @@
 			// Performing SQL query
 			$query = 'SELECT * FROM phones_list';
 			$this->_table = $this->_makeQuery($query);
-			while ($row = $this->_fetchRow($this->_table)) {
+			while ($row = $this->_fetchRow($this->_table))
+			{
 			    $result[] = $row;
 			}
 			$this->_killSelf();
@@ -49,6 +50,18 @@
 				"UPDATE phones_list SET Status='$status', Date = NOW() WHERE Status!='Free' AND ID = $id"
 				);
 
+			$this->_killSelf();
+			return $result;
+		}
+
+		public function getUsers()
+		{
+			$result = [];
+			$this->_table = $this->_makeQuery("SELECT * FROM users");
+			while ($row = $this->_fetchRow($this->_table))
+			{
+			    $result[] = $row;
+			}
 			$this->_killSelf();
 			return $result;
 		}

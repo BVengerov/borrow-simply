@@ -3,7 +3,6 @@
 	var app = angular.module("borrowsimply", []);
 
 	var $baseUrl = "services/";
-	var $username = "vengerov";
 
 	app.factory("itemsService", function($http) {
 		return {
@@ -13,13 +12,13 @@
 				    url: $baseUrl + "getItems.php"
 				});
 			},
-			takeItem: function(item) {
+			takeItem: function(item, username) {
 				return $http({
 				    method: "POST",
 				    url: $baseUrl + "takeItem.php",
 					 data: {
 					 	id: item.id,
-					 	status: "Taken by " + $username
+					 	status: "Taken by " + username
 					 },
 					 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 				});
@@ -28,8 +27,14 @@
 				return $http({
 				    method: "POST",
 				    url: $baseUrl + "freeItem.php",
-					 data: item.id,
-					 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+					data: item.id,
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+				});
+			},
+			getUsers: function() {
+					return $http({
+				    method: "GET",
+				    url: $baseUrl + "getUsers.php"
 				});
 			}
 		};
@@ -47,15 +52,30 @@
 				});
 		}
 
-		$scope.takeItem = function(item) {
-			itemsService.takeItem(item).then(getItems, function(response) {
-				getItems();
-				$window.alert("Oops! Something went wrong :-( Please check if the item is available or try again later.");
+		var getUsers = function() {
+			itemsService.getUsers().then(function(response) {
+				$scope.users = response.data;
 			});
+		}
+
+		var onError = function() {
+			getItems();
+			$window.alert("Oops! Something went wrong :-( Please try again later.");
+		}
+
+		$scope.takeItem = function(item, username) {
+			if (username)
+			{
+				itemsService.takeItem(item, username).then(getItems, onError);
+			}
+			else
+			{
+				$window.alert("Please select your name first!");
+			}
 		};
 
 		$scope.freeItem = function(item) {
-			itemsService.freeItem(item).then(getItems);
+			itemsService.freeItem(item).then(getItems, onError);
 		};
 
 		$scope.getStatus = function(item) {
@@ -87,6 +107,7 @@
 			getItems();
 		}, 1000);
 
+		getUsers();
 		getItems();
 	});
 })();
