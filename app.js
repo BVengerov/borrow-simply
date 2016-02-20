@@ -105,7 +105,7 @@
 		//TODO reloading for all the clients
 		$interval(function() {
 			getItems();
-		}, 1000);
+		}, 100000);
 
 		getUsers();
 		getItems();

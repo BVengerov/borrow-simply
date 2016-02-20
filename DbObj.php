@@ -31,8 +31,9 @@
 
 		public function takeItem($id, $status)
 		{
+			echo $status;
 			$result = $this->_makeQuery(
-				"UPDATE phones_list SET Status = '$status', Date = NOW() WHERE Status='Free' AND ID = $id"
+				"UPDATE phones_list SET Status = '$status', Date = NOW(), History = CONCAT('$status\n',History) WHERE Status='Free' AND ID = $id"
 				);
 
 			echo $result;
