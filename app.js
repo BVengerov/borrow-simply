@@ -1,6 +1,6 @@
 (function() {
 
-	var app = angular.module("borrowsimply", []);
+	var app = angular.module("borrowsimply", ['ngCookies']);
 
 	var $baseUrl = "services/";
 
@@ -40,7 +40,7 @@
 		};
 	});
 
-	app.controller("ItemController", function($scope, itemsService, $interval, $window) {
+	app.controller("ItemController", function($scope, itemsService, $interval, $window, $cookies) {
 
 		var getItems = function() {
 				itemsService.getItems().then(function(response) {
@@ -55,6 +55,7 @@
 		var getUsers = function() {
 			itemsService.getUsers().then(function(response) {
 				$scope.users = response.data;
+				setUserFromCookies();
 			});
 		}
 
@@ -64,6 +65,7 @@
 		}
 
 		$scope.takeItem = function(item) {
+			//TODO $scope?
 			user = this.selectedUser;
 			if (user)
 			{
@@ -76,6 +78,7 @@
 		};
 
 		$scope.freeItem = function(item) {
+			//TODO $scope?
 			user = this.selectedUser;
 			if (user)
 			{
@@ -114,6 +117,7 @@
 
 		$scope.availableAction = function(item)
 		{
+			//TODO $scope?
 			user = this.selectedUser;
 			if (item.status == "Free")
 				return "Take";
@@ -126,10 +130,32 @@
 				return false;
 		};
 
-		//TODO reloading for all the clients
+		$scope.storeUserLogin = function()
+		{
+			$cookies.put('login', this.selectedUser.login);
+		}
+
+		var setUserFromCookies = function()
+		{
+			userLogin = $cookies.get('login');
+			selectedUser = undefined;
+			if (userLogin)
+			{
+				for (user of $scope.users)
+				{
+					if (userLogin == user.login)
+					{
+						selectedUser = user;
+						break;
+					}
+				}
+			}
+			$scope.selectedUser = selectedUser;
+		}
+
 		$interval(function() {
 			getItems();
-		}, 100000);
+		}, 1000);
 
 		getUsers();
 		getItems();

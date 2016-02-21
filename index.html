@@ -5,6 +5,7 @@
 		<link rel="stylesheet" href="style.css">
 		<script src="angular.js"></script>
 		<script src="angular-route.js"></script>
+		<script src="angular-cookies.js"></script>
 		<script src="app.js"></script>
 	</head>
 <body ng-app="borrowsimply">
@@ -12,7 +13,7 @@
 		<table>
 			<tr class="table-title">
 				<td>ID</td>
-				<td>Phone_name</td>
+				<td>Name</td>
 				<td>OS</td>
 				<td>Status</td>
 				<td>actions</td>
@@ -20,7 +21,7 @@
 				<td>History</td>
 			</tr>
 			<div class="styled-select">
-				<select ng-options="user as user.login for user in users" value="{{ user.id }}" ng-model="selectedUser">{{ user.login }}</option>
+				<select ng-options="user as user.login for user in users" value="{{ user.id }}" ng-model="selectedUser" ng-change="storeUserLogin()">{{ user.login }}</option>
 			</div>
 			</select>
 			<tr ng-repeat="p in items">

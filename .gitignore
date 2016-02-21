@@ -3,6 +3,7 @@
 ftpsync.settings
 angular.js
 angular-route.js
+angular-cookies.js
 
 # Compiled source #
 ###################
