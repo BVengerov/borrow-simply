@@ -30,7 +30,8 @@ class ItemRepository
 						$row['OS'],
 						$row['Status'],
 						$row['Date'],
-						$row['Comments']
+						$row['Comments'],
+						$row['History']
 				)
 			);
 		}

@@ -63,10 +63,10 @@
 			$window.alert("Oops! Something went wrong :-( Please try again later.");
 		}
 
-		$scope.takeItem = function(item, username) {
-			if (username)
+		$scope.takeItem = function(item, user) {
+			if (user)
 			{
-				itemsService.takeItem(item, username).then(getItems, onError);
+				itemsService.takeItem(item, user.login).then(getItems, onError);
 			}
 			else
 			{
@@ -74,8 +74,16 @@
 			}
 		};
 
-		$scope.freeItem = function(item) {
-			itemsService.freeItem(item).then(getItems, onError);
+		$scope.freeItem = function(item, user) {
+			if (user)
+			{
+				itemsService.freeItem(item).then(getItems, onError);
+			}
+			else
+			{
+				$window.alert("Please select your name first!");
+			}
+
 		};
 
 		$scope.getStatus = function(item) {
@@ -101,6 +109,19 @@
 				return status + " at " + hhmm + " on " + ddnnyyyy;
 			}
 		}
+
+		$scope.availableAction = function(item, user)
+		{
+			if (item.status == "Free")
+				return "Take";
+			else if (
+				typeof user != 'undefined' &&
+				user.login == item.status.replace("Taken by ", "")
+				)
+				return "Return";
+			else
+				return false;
+		};
 
 		//TODO reloading for all the clients
 		$interval(function() {

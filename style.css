@@ -21,9 +21,15 @@ button {
 	width: 100px;
 }
 
-.button-free {
+.button-take {
 	content: 'Take item';
 	color: green;
+	font-weight: bold;
+}
+
+.button-return {
+	content: 'Return item';
+	color: red;
 	font-weight: bold;
 }
 
