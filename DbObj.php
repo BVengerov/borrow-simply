@@ -39,7 +39,7 @@
 			echo $result;
 			if (!$result || mysql_affected_rows() === 0)
 			{
-				return header("HTTP/1.1 500 Internal Server Error");
+				header("HTTP/1.1 500 Internal Server Error");
 			}
 			$this->_killSelf();
 			return $result;

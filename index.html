@@ -17,6 +17,7 @@
 				<td>Status</td>
 				<td>actions</td>
 				<td>Comments</td>
+				<td>History</td>
 			</tr>
 			<div class="styled-select">
 				<select ng-options="user as user.login for user in users" value="{{ user.id }}" ng-model="selectedUser">{{ user.login }}</option>
@@ -26,13 +27,14 @@
 				<td>{{ p.id }}</td>
 				<td>{{ p.name }}</td>
 				<td>{{ p.os }}</td>
-				<td>{{ getStatus(p) }}</td>
+				<td><span title="{{ getStatus(p) }}">{{ p.status }}</span></td>
 				<td>
 					<button class='button-take' ng-show="availableAction(p) == 'Take'" ng-click='takeItem(p)'>Take</button>
 					<button class='button-return' ng-click="freeItem(p)" ng-show="availableAction(p) == 'Return'">Return</button>
 					<button class='button-taken' disabled ng-show="availableAction(p) != 'Take' && availableAction(p) != 'Return'">Taken</button>
 				</td>
 				<td>{{ p.comments }}</td>
+				<td><img class="history-icon" src="http://findicons.com/files/icons/2711/free_icons_for_windows8_metro/512/list_ingredients_512.png" alt="History icon" title="{{ p.history }}"></td>
 			</tr>
 		</table>
 	</div>

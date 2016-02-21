@@ -43,4 +43,8 @@ button {
    border: 0;
    border-radius: 0;
    height: 34px;
-   }
+}
+
+.history-icon {
+	max-width: 20px;
+}
