@@ -28,9 +28,9 @@
 				<td>{{ p.os }}</td>
 				<td>{{ getStatus(p) }}</td>
 				<td>
-					<button class='button-take' ng-show="availableAction(p, selectedUser) == 'Take'" ng-click='takeItem(p, selectedUser)'>Take</button>
-					<button class='button-return' ng-click="freeItem(p, selectedUser)" ng-show="availableAction(p, selectedUser) == 'Return'">Return</button>
-					<button class='button-taken' disabled ng-show="availableAction(p, selectedUser) != 'Take' && availableAction(p, selectedUser) != 'Return'">Taken</button>
+					<button class='button-take' ng-show="availableAction(p) == 'Take'" ng-click='takeItem(p)'>Take</button>
+					<button class='button-return' ng-click="freeItem(p)" ng-show="availableAction(p) == 'Return'">Return</button>
+					<button class='button-taken' disabled ng-show="availableAction(p) != 'Take' && availableAction(p) != 'Return'">Taken</button>
 				</td>
 				<td>{{ p.comments }}</td>
 			</tr>

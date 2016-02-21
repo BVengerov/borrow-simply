@@ -63,7 +63,8 @@
 			$window.alert("Oops! Something went wrong :-( Please try again later.");
 		}
 
-		$scope.takeItem = function(item, user) {
+		$scope.takeItem = function(item) {
+			user = this.selectedUser;
 			if (user)
 			{
 				itemsService.takeItem(item, user.login).then(getItems, onError);
@@ -74,7 +75,8 @@
 			}
 		};
 
-		$scope.freeItem = function(item, user) {
+		$scope.freeItem = function(item) {
+			user = this.selectedUser;
 			if (user)
 			{
 				itemsService.freeItem(item).then(getItems, onError);
@@ -110,8 +112,9 @@
 			}
 		}
 
-		$scope.availableAction = function(item, user)
+		$scope.availableAction = function(item)
 		{
+			user = this.selectedUser;
 			if (item.status == "Free")
 				return "Take";
 			else if (
