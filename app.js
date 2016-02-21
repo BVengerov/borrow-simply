@@ -155,7 +155,7 @@
 
 		$interval(function() {
 			getItems();
-		}, 1000);
+		}, 100000);
 
 		getUsers();
 		getItems();
