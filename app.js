@@ -88,7 +88,7 @@
 
 		};
 
-		$scope.getStatus = function(item) {
+		$scope.getFullStatusText = function(item) {
 			var status = item.status;
 			if (status == "Free") {
 				return status;

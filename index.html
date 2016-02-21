@@ -27,7 +27,7 @@
 				<td>{{ p.id }}</td>
 				<td>{{ p.name }}</td>
 				<td>{{ p.os }}</td>
-				<td><span title="{{ getStatus(p) }}">{{ p.status }}</span></td>
+				<td><span title="{{ getFullStatusText(p) }}">{{ p.status }}</span></td>
 				<td>
 					<button class='button-take' ng-show="availableAction(p) == 'Take'" ng-click='takeItem(p)'>Take</button>
 					<button class='button-return' ng-click="freeItem(p)" ng-show="availableAction(p) == 'Return'">Return</button>
