@@ -72,6 +72,7 @@
 		{
 			$this->_dbLink = mysql_connect($this->_host, $this->_login, $this->_password)
 				or die('Could not connect: ' . mysql_error());
+			mysql_set_charset('utf8', $this->_dbLink);
 			return $this->_dbLink;
 		}
 
