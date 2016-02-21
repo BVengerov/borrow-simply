@@ -21,7 +21,7 @@
 				<td>History</td>
 			</tr>
 			<div class="styled-select">
-				<select ng-options="user as user.login for user in users" value="{{ user.id }}" ng-model="selectedUser" ng-change="storeUserLogin()">{{ user.login }}</option>
+				<select ng-options="user as user.login for user in users | orderBy:'login'" value="{{ user.id }}" ng-model="selectedUser" ng-change="storeUserLogin()">{{ user.login }}</option>
 			</div>
 			</select>
 			<tr ng-repeat="p in items">
@@ -31,13 +31,24 @@
 				<td><span title="{{ getFullStatusText(p) }}">{{ p.status }}</span></td>
 				<td>
 					<button class='button-take' ng-show="availableAction(p) == 'Take'" ng-click='takeItem(p)'>Take</button>
-					<button class='button-return' ng-click="freeItem(p)" ng-show="availableAction(p) == 'Return'">Return</button>
+					<button class='button-return' ng-click="returnItem(p)" ng-show="availableAction(p) == 'Return'">Return</button>
 					<button class='button-taken' disabled ng-show="availableAction(p) != 'Take' && availableAction(p) != 'Return'">Taken</button>
 				</td>
 				<td>{{ p.comments }}</td>
 				<td><img class="history-icon" src="http://findicons.com/files/icons/2711/free_icons_for_windows8_metro/512/list_ingredients_512.png" alt="History icon" title="{{ p.history }}"></td>
 			</tr>
 		</table>
+	</div>
+
+	<!-- This is a working-section with the list of pending issues to be implemented -->
+	<div class='working-section'>Список того, что можно было бы ещё добавить:
+		<ol>
+			<li>Хочу напоминалку о необходимости поставить телефон на подзарядку (алерт/попап при возвращении?)</li>
+			<li>Хочу нотификейшн, если айтем взят мной больше <дня> назад</li>
+			<li>Хочу возможность сортировать список телефонов по ID/OS/??</li>
+			<li>Хочу красивый дизайн</li>
+			<li>Хочу оставлять и менять комменты</li>
+		</ol>
 	</div>
 </body>
 </html>

@@ -46,7 +46,7 @@
 			return $result;
 		}
 
-		public function freeItem($id, $status)
+		public function returnItem($id, $status)
 		{
 			$date = date('H:i d-m-Y');
 			$result = $this->_makeQuery(

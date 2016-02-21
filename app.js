@@ -23,10 +23,10 @@
 					 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 				});
 			},
-			freeItem: function(item) {
+			returnItem: function(item) {
 				return $http({
 				    method: "POST",
-				    url: $baseUrl + "freeItem.php",
+				    url: $baseUrl + "returnItem.php",
 					data: item.id,
 					headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 				});
@@ -65,24 +65,22 @@
 		}
 
 		$scope.takeItem = function(item) {
-			//TODO $scope?
-			user = this.selectedUser;
+			user = $scope.selectedUser;
 			if (user)
 			{
 				itemsService.takeItem(item, user.login).then(getItems, onError);
 			}
 			else
 			{
-				$window.alert("Please select your name first!");
+				$window.alert("<-- Please select your name first.");
 			}
 		};
 
-		$scope.freeItem = function(item) {
-			//TODO $scope?
-			user = this.selectedUser;
+		$scope.returnItem = function(item) {
+			user = $scope.selectedUser;
 			if (user)
 			{
-				itemsService.freeItem(item).then(getItems, onError);
+				itemsService.returnItem(item).then(getItems, onError);
 			}
 			else
 			{
@@ -93,17 +91,15 @@
 
 		$scope.getFullStatusText = function(item) {
 			var status = item.status;
-			if (status == "Free") {
+			if (status == "Free")
 				return status;
-			}
 			else {
 				// Format date into readable format
 				var date = new Date(item.date);
 				var hh = date.getHours();
 				var mm = date.getMinutes();
-				if (mm < 10) {
+				if (mm < 10)
 				    mm = '0' + mm
-				}
 				var hhmm = hh + ":" + mm;
 
 				var dd = date.getDate();
@@ -117,8 +113,7 @@
 
 		$scope.availableAction = function(item)
 		{
-			//TODO $scope?
-			user = this.selectedUser;
+			user = $scope.selectedUser;
 			if (item.status == "Free")
 				return "Take";
 			else if (
@@ -155,7 +150,7 @@
 
 		$interval(function() {
 			getItems();
-		}, 100000);
+		}, 1000);
 
 		getUsers();
 		getItems();

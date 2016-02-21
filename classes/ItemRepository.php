@@ -51,10 +51,10 @@ class ItemRepository
 		return $result;
 	}
 
-	public static function freeItem($id)
+	public static function returnItem($id)
 	{
 		$db = self::_getDb();
-		$result = $db->freeItem($id, 'Free');
+		$result = $db->returnItem($id, 'Free');
 		return $result;
 	}
 }
