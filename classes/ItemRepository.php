@@ -19,7 +19,7 @@ class ItemRepository
 
 	protected static function init()
 	{
-		$dbRows = self::_getDb()->getRows();
+		$dbRows = self::_getDb()->getItems();
 		$dbData = array();
 		foreach ($dbRows as $row)
 		{

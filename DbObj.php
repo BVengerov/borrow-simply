@@ -1,108 +1,73 @@
 <?php
-
 	class DbObj
 	{
 		private $_host = '127.0.0.1';
-		private $_login ='bvengerov';
+		private $_dbName = 'items';
+		private $_charset = 'utf8';
+		private $_username = 'bvengerov';
 		private $_password = 'root';
-		private $_tableName ='items';
-		private $_dbLink;
-		private $_table;
+		private $_tableNameItems = 'phones_list';
+		private $_tableNameUsers = 'users';
 
-		public function __construct()
+		private $_dbObj;
+
+		private function _getDb()
 		{
-			$this->_connectToDb();
-			$this->_selectDb();
+			if (!$this->_dbObj)
+			{
+				$this->_dbObj = new PDO(
+						"mysql:host=$this->_host;dbname=$this->_dbName;charset=$this->_charset",
+						"$this->_username",
+						"$this->_password",
+						array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+					);
+			}
+			return $this->_dbObj;
 		}
 
-		public function getRows()
+		public function getItems()
 		{
-			$result = [];
-			// Performing SQL query
-			$query = 'SELECT * FROM phones_list';
-			$this->_table = $this->_makeQuery($query);
-			while ($row = $this->_fetchRow($this->_table))
-			{
-			    $result[] = $row;
-			}
-			$this->_killSelf();
-			return $result;
+			return $this->_getAllTableData($this->_tableNameItems);
+		}
+
+		public function getUsers()
+		{
+			return $this->_getAllTableData($this->_tableNameUsers);
 		}
 
 		public function takeItem($id, $status)
 		{
-			echo $status;
 			$date = date('H:i d-m-Y');
-			$result = $this->_makeQuery(
-				"UPDATE phones_list SET Status = '$status', Date = NOW(), History = CONCAT('$status [$date]\n',History) WHERE Status='Free' AND ID = $id"
-				);
-
-			echo $result;
-			if (!$result || mysql_affected_rows() === 0)
-			{
-				header("HTTP/1.1 500 Internal Server Error");
-			}
-			$this->_killSelf();
-			return $result;
+			$query = "UPDATE $this->_tableNameItems SET Status = '$status', Date = NOW(), History = CONCAT('$status [$date]\n',History)"
+			. " WHERE Status='Free' AND ID = $id";
+			return $this->_runUpdateQuery($query);
 		}
 
 		public function returnItem($id, $status)
 		{
 			$date = date('H:i d-m-Y');
-			$result = $this->_makeQuery(
-				"UPDATE phones_list SET Status='$status', Date = NOW(), History = CONCAT('Returned [$date]\n',History) WHERE Status!='Free' AND ID = $id"
-				);
+			$query = "UPDATE $this->_tableNameItems SET Status='$status', Date = NOW(), History = CONCAT('Returned [$date]\n',History)"
+			. " WHERE Status!='Free' AND ID = $id";
+			return $this->_runUpdateQuery($query);
+		}
 
-			$this->_killSelf();
+		private function _getAllTableData($tableName)
+		{
+			// If going global, prepare & execute should be used here to be secure of SQL injection
+			$statement = $this->_getDb()->query("SELECT * FROM $tableName");
+			$result = $statement->fetchAll(PDO::FETCH_ASSOC);
 			return $result;
 		}
 
-		public function getUsers()
+		private function _runUpdateQuery($query)
 		{
-			$result = [];
-			$this->_table = $this->_makeQuery("SELECT * FROM users");
-			while ($row = $this->_fetchRow($this->_table))
+			// If going global, prepare & execute should be used here to be secure of SQL injection
+			$statement = $this->_getDb()->query($query);
+			if (!$statement)
 			{
-			    $result[] = $row;
+				header("HTTP/1.1 500 Internal Server Error");
 			}
-			$this->_killSelf();
-			return $result;
-		}
-
-		// Connecting, selecting database
-		private function _connectToDb()
-		{
-			$this->_dbLink = mysql_connect($this->_host, $this->_login, $this->_password)
-				or die('Could not connect: ' . mysql_error());
-			mysql_set_charset('utf8', $this->_dbLink);
-			return $this->_dbLink;
-		}
-
-		private function _selectDb()
-		{
-			mysql_select_db($this->_tableName) or die('Could not select database');
-		}
-
-		private function _makeQuery($query)
-		{
-			$result = mysql_query($query) or die('Query failed: ' . mysql_error());
-			return $result;
-		}
-
-		private function _fetchRow($table)
-		{
-			return mysql_fetch_assoc($table);
-		}
-
-		private function _killSelf()
-		{
-			//Free resultset
-			if (!is_null($this->_table))
-			{
-				mysql_freeresult($this->_table);
-			};
-			// Closing connection
-			mysql_close($this->_dbLink);
+			return $statement;
 		}
 	}
 ?>
