@@ -35,9 +35,11 @@
 				<td>{{ p.os }}</td>
 				<td><span title="{{ getFullStatusText(p) }}">{{ p.status }}</span></td>
 				<td>
-					<button class='button-take' ng-show="availableAction(p) == 'Take'" ng-click='takeItem(p)'>Take</button>
-					<button class='button-return' ng-click="returnItem(p)" ng-show="availableAction(p) == 'Return'">Return</button>
-					<button class='button-taken' disabled ng-show="availableAction(p) != 'Take' && availableAction(p) != 'Return'">Taken</button>
+					<button class='button-take' ng-show="getAvailableAction(p) == 'Take'" ng-click='takeItem(p)'>Take</button>
+					<span qtip='Не забыл поставить на зарядку? ;)' qtip-at="bottom center" qtip-my="top center" qtip-event="false" qtip-event_out="unfocus">
+						<button class='button-return' ng-click="returnItem(p)" ng-show="getAvailableAction(p) == 'Return'">Return</button>
+					</span>
+					<button class='button-taken' disabled ng-show="getAvailableAction(p) != 'Take' && getAvailableAction(p) != 'Return'">Taken</button>
 				</td>
 				<td>{{ p.comments }}</td>
 				<td><img class="history-icon" src="http://findicons.com/files/icons/2711/free_icons_for_windows8_metro/512/list_ingredients_512.png" alt="History icon" title="{{ p.history }}"></td>
@@ -48,7 +50,6 @@
 	<!-- This is a working-section with the list of pending issues to be implemented -->
 	<div class='working-section'>Список того, что можно было бы ещё добавить:
 		<ol>
-			<li>Хочу напоминалку о необходимости поставить телефон на подзарядку (алерт/попап при возвращении?)</li>
 			<li>Хочу нотификейшн, если айтем взят мной больше <дня> назад</li>
 			<li>Хочу возможность сортировать список телефонов по ID/OS/??</li>
 			<li>Хочу красивый дизайн</li>

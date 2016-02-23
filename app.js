@@ -46,39 +46,32 @@
 				itemsService.getItems().then(function(response) {
 					//Updating model on change only
 					if (!angular.equals($scope.items, response.data))
-					{
 						$scope.items = response.data;
-					}
 				});
 		}
 
 		var onError = function() {
-			getItems(); //Because it's probably due to changes in DB not been synced with the model
+			getItems(); //Because it's probably due to changes in DB not synced with the model
 			$window.alert("Oops! Something went wrong :-( Please try again later.");
 		}
 
 		$scope.takeItem = function(item) {
 			user = $scope.selectedUser;
 			if (user)
-			{
 				itemsService.takeItem(item, user.login).then(getItems, onError);
-			}
 			else
-			{
 				$window.alert("<-- Please select your name first.");
-			}
 		};
 
 		$scope.returnItem = function(item) {
 			user = $scope.selectedUser;
 			if (user)
-			{
-				itemsService.returnItem(item).then(getItems, onError);
-			}
+				itemsService.returnItem(item).then(function() {
+					getItems();
+					$scope.returnedItemId = item.id;
+				}, onError);
 			else
-			{
 				$window.alert("<-- Please select your name first!");
-			}
 		};
 
 		$scope.getFullStatusText = function(item) {
@@ -103,7 +96,7 @@
 			}
 		}
 
-		$scope.availableAction = function(item) {
+		$scope.getAvailableAction = function(item) {
 			user = $scope.selectedUser;
 			if (item.status == "Free")
 				return "Take";
@@ -150,7 +143,7 @@
 		$interval(function() {
 			getItems();
 			//TODO вернуть 1000
-		}, 100000);
+		}, 1000);
 
 		getUsersAndSelectUser();
 		getItems();
