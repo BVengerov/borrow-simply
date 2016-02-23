@@ -57,3 +57,15 @@ button {
   	top: 50%;
   	transform: translateY(-50%);
 }
+
+a, a:visited, a:active {
+  color: #2d3644;
+  text-decoration: none;
+  border-bottom: 1px blue dotted;
+}
+
+a:hover {
+  color: #5493ff;
+  text-decoration: underline;
+  border: none;
+}

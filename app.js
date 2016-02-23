@@ -145,6 +145,8 @@
 			//TODO вернуть 1000
 		}, 1000);
 
+		sortTable = 'id';
+		sortReverse  = false;
 		getUsersAndSelectUser();
 		getItems();
 	});
