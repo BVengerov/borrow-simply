@@ -24,7 +24,9 @@
 				<td>History</td>
 			</tr>
 			<div class="styled-select">
-				<select ng-options="user as user.login for user in users | orderBy:'login'" value="{{ user.id }}" ng-model="selectedUser" ng-change="storeUserLogin()">{{ user.login }}</option>
+				<span qtip='Please select your username' qtip-visible="showUnknownUserAlert && !selectedUser" qtip-disable="selectedUser != undefined" qtip-at="center right" qtip-my="center left" qtip-event="false">
+					<select ng-options="user as user.login for user in users | orderBy:'login'" value="{{ user.id }}" ng-model="selectedUser" ng-change="storeUserLogin()">{{ user.login }}</option>
+				</span>
 			</div>
 			</select>
 			<tr ng-repeat="p in items">

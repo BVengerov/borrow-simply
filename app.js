@@ -52,13 +52,6 @@
 				});
 		}
 
-		var getUsers = function() {
-			itemsService.getUsers().then(function(response) {
-				$scope.users = response.data;
-				setUserFromCookies();
-			});
-		}
-
 		var onError = function() {
 			getItems(); //Because it's probably due to changes in DB not been synced with the model
 			$window.alert("Oops! Something went wrong :-( Please try again later.");
@@ -110,8 +103,7 @@
 			}
 		}
 
-		$scope.availableAction = function(item)
-		{
+		$scope.availableAction = function(item) {
 			user = $scope.selectedUser;
 			if (item.status == "Free")
 				return "Take";
@@ -124,14 +116,12 @@
 				return false;
 		};
 
-		$scope.storeUserLogin = function()
-		{
+		$scope.storeUserLogin = function() {
 			$cookies.put('login', this.selectedUser.login);
 		}
 
-		var setUserFromCookies = function()
-		{
-			selectedUser = undefined;
+		var setUserFromCookies = function() {
+			var selectedUser = undefined;
 			userLogin = $cookies.get('login');
 			if (userLogin)
 			{
@@ -145,13 +135,24 @@
 				}
 			}
 			$scope.selectedUser = selectedUser;
+			// Bool flag for showing initial "please select username" qtip
+			if ($scope.selectedUser == undefined)
+				$scope.showUnknownUserAlert = true;
+		}
+
+		var getUsersAndSelectUser = function() {
+			itemsService.getUsers().then(function(response) {
+				$scope.users = response.data;
+				setUserFromCookies();
+			});
 		}
 
 		$interval(function() {
 			getItems();
-		}, 1000);
+			//TODO вернуть 1000
+		}, 100000);
 
-		getUsers();
+		getUsersAndSelectUser();
 		getItems();
 	});
 })();
