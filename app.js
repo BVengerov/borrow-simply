@@ -143,7 +143,7 @@
 		$interval(function() {
 			getItems();
 			//TODO вернуть 1000
-		}, 100000);
+		}, 1000);
 
 		getUsersAndSelectUser();
 		getItems();
