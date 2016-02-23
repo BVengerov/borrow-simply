@@ -51,6 +51,12 @@
 			return $this->_runUpdateQuery($query);
 		}
 
+		public function updateComment($id, $comment)
+		{
+			$query = "UPDATE $this->_tableNameItems SET Comment = '$comment' WHERE ID = '$id'";
+			return $this->_runUpdateQuery($query);
+		}
+
 		private function _getAllTableData($tableName)
 		{
 			// If going global, prepare & execute should be used here to be secure of SQL injection

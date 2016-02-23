@@ -15,7 +15,7 @@ class Item
 	$os = '',
 	$status = '',
 	$date = '',
-	$comments = '',
+	$comment = '',
 	$history = ''
 	)
 	{
@@ -24,7 +24,7 @@ class Item
 		$this->os = $os;
 		$this->status = $status;
 		$this->date = $date;
-		$this->comments = $comments;
+		$this->comment = $comment;
 		$this->history = $history;
 	}
 }

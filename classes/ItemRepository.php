@@ -30,7 +30,7 @@ class ItemRepository
 						$row['OS'],
 						$row['Status'],
 						$row['Date'],
-						$row['Comments'],
+						$row['Comment'],
 						$row['History']
 				)
 			);
@@ -47,7 +47,7 @@ class ItemRepository
 	public static function takeItem($id, $status)
 	{
 		$db = self::_getDb();
-		$result = $db->takeItem($id, $status);
+		$return = $db->takeItem($id, $status);
 		return $result;
 	}
 
@@ -55,6 +55,13 @@ class ItemRepository
 	{
 		$db = self::_getDb();
 		$result = $db->returnItem($id, 'Free');
+		return $result;
+	}
+
+	public static function updateComment($id, $comment)
+	{
+		$db = self::_getDb();
+		$result = $db->updateComment($id, $comment);
 		return $result;
 	}
 }

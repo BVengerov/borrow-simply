@@ -31,6 +31,17 @@
 					headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 				});
 			},
+			updateComment: function(item, comment) {
+				return $http({
+				    method: "POST",
+				    url: $baseUrl + "updateComment.php",
+					data: {
+						'id': item.id,
+						'comment': comment
+					},
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+				});
+			},
 			getUsers: function() {
 					return $http({
 				    method: "GET",
@@ -96,6 +107,11 @@
 			}
 		}
 
+		$scope.updateComment = function(item, comment) {
+			if (item.comment != comment)
+				itemsService.updateComment(item, comment).then(getItems, onError);
+		}
+
 		$scope.getAvailableAction = function(item) {
 			user = $scope.selectedUser;
 			if (item.status == "Free")
@@ -140,13 +156,24 @@
 			});
 		}
 
-		$interval(function() {
-			getItems();
-			//TODO вернуть 1000
-		}, 1000);
+		// Reduce update rate ten-fold when the tab is not active
+		angular.element($window).bind('focus', function() {
+			$interval.cancel(itemsRefresh);
+			itemsRefresh = startRefreshingItems(1000);
+		}).bind('blur', function() {
+			$interval.cancel(itemsRefresh);
+			itemsRefresh = startRefreshingItems(10000);
+		});
+
+		var startRefreshingItems = function(updateInterval) {
+				return $interval(function() {
+				getItems();
+			}, updateInterval);
+		}
 
 		getUsersAndSelectUser();
 		getItems();
+		itemsRefresh = startRefreshingItems(1000);
 	});
 })();
 
