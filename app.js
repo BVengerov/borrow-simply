@@ -158,20 +158,22 @@
 
 		// Reduce update rate ten-fold when the tab is not active
 		angular.element($window).bind('focus', function() {
-			updateInterval = 1000;
-			console.log(updateInterval);
+			$interval.cancel(itemsRefresh);
+			itemsRefresh = startRefreshingItems(1000);
 		}).bind('blur', function() {
-			updateInterval = 10000;
-			console.log(updateInterval);
+			$interval.cancel(itemsRefresh);
+			itemsRefresh = startRefreshingItems(10000);
 		});
 
-		updateInterval = 1000;
-		$interval(function() {
-			getItems();
-		}, updateInterval);
+		var startRefreshingItems = function(updateInterval) {
+				return $interval(function() {
+				getItems();
+			}, updateInterval);
+		}
 
 		getUsersAndSelectUser();
 		getItems();
+		itemsRefresh = startRefreshingItems(1000);
 	});
 })();
 
