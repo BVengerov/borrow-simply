@@ -69,3 +69,16 @@ a:hover {
   text-decoration: underline;
   border: none;
 }
+
+a.edit-comment {
+	float: right;
+	margin: auto;
+	font-weight: bold;
+}
+
+input.input-comment {
+	width: 90%;
+	margin: auto;
+	font-family: Lucida Console;
+	text-align: center;
+}

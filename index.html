@@ -14,13 +14,13 @@
 <body ng-app="borrowsimply">
 	<div ng-controller="ItemController as itemCtrl">
 		<table>
-			<tr class="table-title">
+			<tr class="table-title" ng-init="sortTable='id'; sortReverse = false">
 				<td><a href="#" ng-click="sortTable='id'; sortReverse = !sortReverse">ID</a></td>
 				<td><a href="#" ng-click="sortTable='name'; sortReverse = !sortReverse">Name</a></td>
 				<td><a href="#" ng-click="sortTable='os'; sortReverse = !sortReverse">OS</a></td>
 				<td><a href="#" ng-click="sortTable='status'; sortReverse = !sortReverse">Status</a></td>
-				<td>actions</td>
-				<td>Comments</td>
+				<td>Actions</td>
+				<td>Comment</td>
 				<td>History</td>
 			</tr>
 			<div class="styled-select">
@@ -41,20 +41,19 @@
 					</span>
 					<button class='button-taken' disabled ng-show="getAvailableAction(p) != 'Take' && getAvailableAction(p) != 'Return'">Taken</button>
 				</td>
-				<td>{{ p.comments }}</td>
+				<td>
+					<div ng-hide="editEnabled">
+						{{ p.comment }}
+						<a class="edit-comment" href="#" ng-click="editEnabled=!editEnabled">Edit</a>
+					</div>
+					<div ng-show="editEnabled">
+						<input class="input-comment" ng-model="commentToUpdate" ng-init="commentToUpdate=p.comment"><!--Not using ng-model="p.comment" directly because this would trigger update of the whole table-->
+						<a class="edit-comment" href="#" ng-click="editEnabled=!editEnabled; updateComment(p, commentToUpdate)" >Done</a>
+					</div>
+				</td>
 				<td><img class="history-icon" src="http://findicons.com/files/icons/2711/free_icons_for_windows8_metro/512/list_ingredients_512.png" alt="History icon" title="{{ p.history }}"></td>
 			</tr>
 		</table>
-	</div>
-
-	<!-- This is a working-section with the list of pending issues to be implemented -->
-	<div class='working-section'>Список того, что можно было бы ещё добавить:
-		<ol>
-			<li>Хочу нотификейшн, если айтем взят мной больше <дня> назад</li>
-			<li>Хочу возможность сортировать список телефонов по ID/OS/??</li>
-			<li>Хочу красивый дизайн</li>
-			<li>Хочу оставлять и менять комменты</li>
-		</ol>
 	</div>
 </body>
 </html>
