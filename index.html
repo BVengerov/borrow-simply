@@ -1,36 +1,59 @@
 <html ng-app="borrowsimply">
 <head lang='en'>
-	<meta charset='UTF-8'>
+	<meta charset='utf-8'>
 	<title>Phones</title>
-		<link rel="stylesheet" href="style.css">
-		<script src="angular.js"></script>
-		<script src="angular-route.js"></script>
+		<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+		<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
+		<script src="bower_components/jQuery/dist/jquery.js"></script>
+		<script src="bower_components/qtip2/jquery.qtip.min.js"></script>
+		<script type="text/javascript" src="bower_components/ng-qtip2/ng-qtip2.js"></script><!-- https://github.com/chenasraf/ng-qtip2/blob/master/LICENSE -->
 		<script src="app.js"></script>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="bower_components/qtip2/jquery.qtip.min.css" />
 	</head>
 <body ng-app="borrowsimply">
 	<div ng-controller="ItemController as itemCtrl">
 		<table>
 			<tr class="table-title">
 				<td>ID</td>
-				<td>Phone_name</td>
+				<td>Name</td>
 				<td>OS</td>
 				<td>Status</td>
 				<td>actions</td>
 				<td>Comments</td>
+				<td>History</td>
 			</tr>
+			<div class="styled-select">
+				<span qtip='Please select your username' qtip-visible="showUnknownUserAlert && !selectedUser" qtip-disable="selectedUser != undefined" qtip-at="center right" qtip-my="center left" qtip-event="false">
+					<select ng-options="user as user.login for user in users | orderBy:'login'" value="{{ user.id }}" ng-model="selectedUser" ng-change="storeUserLogin()">{{ user.login }}</option>
+				</span>
+			</div>
+			</select>
 			<tr ng-repeat="p in items">
 				<td>{{ p.id }}</td>
 				<td>{{ p.name }}</td>
 				<td>{{ p.os }}</td>
-				<td>{{ getStatus(p) }}</td>
+				<td><span title="{{ getFullStatusText(p) }}">{{ p.status }}</span></td>
 				<td>
-					<button class='button-free' ng-show="p.status == 'Free'" ng-click='takeItem(p)'>Take</button>
-					<button class='button-taken' disabled ng-hide="p.status == 'Free'">Taken</button>
-					<button class='button-release' ng-click="freeItem(p)" ng-hide="p.status == 'Free'">Free phone</button>
+					<button class='button-take' ng-show="availableAction(p) == 'Take'" ng-click='takeItem(p)'>Take</button>
+					<button class='button-return' ng-click="returnItem(p)" ng-show="availableAction(p) == 'Return'">Return</button>
+					<button class='button-taken' disabled ng-show="availableAction(p) != 'Take' && availableAction(p) != 'Return'">Taken</button>
 				</td>
 				<td>{{ p.comments }}</td>
+				<td><img class="history-icon" src="http://findicons.com/files/icons/2711/free_icons_for_windows8_metro/512/list_ingredients_512.png" alt="History icon" title="{{ p.history }}"></td>
 			</tr>
 		</table>
+	</div>
+
+	<!-- This is a working-section with the list of pending issues to be implemented -->
+	<div class='working-section'>Список того, что можно было бы ещё добавить:
+		<ol>
+			<li>Хочу напоминалку о необходимости поставить телефон на подзарядку (алерт/попап при возвращении?)</li>
+			<li>Хочу нотификейшн, если айтем взят мной больше <дня> назад</li>
+			<li>Хочу возможность сортировать список телефонов по ID/OS/??</li>
+			<li>Хочу красивый дизайн</li>
+			<li>Хочу оставлять и менять комменты</li>
+		</ol>
 	</div>
 </body>
 </html>

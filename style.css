@@ -2,7 +2,8 @@ table {
 	margin: 8px;
 	background-color: linen;
 	margin: auto;
-	text-align: center
+	text-align: center;
+	width: 80%
 }
 
 .table-title td {
@@ -21,8 +22,38 @@ button {
 	width: 100px;
 }
 
-.button-free {
+.button-take {
 	content: 'Take item';
 	color: green;
 	font-weight: bold;
+}
+
+.button-return {
+	content: 'Return item';
+	color: red;
+	font-weight: bold;
+}
+
+.styled-select select {
+   background: white;
+   text-align:center;
+   width: 140px;
+   padding: 5px;
+   font-size: 16px;
+   font-family: sans-serif;
+   line-height: 2;
+   border: 10;
+   border-radius: 0;
+   height: 34px;
+}
+
+.history-icon {
+	max-width: 20px;
+}
+
+.working-section {
+	font-family: Lucida;
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
 }

@@ -7,6 +7,7 @@ class Item
 	public $os;
 	public $status;
 	public $comment;
+	public $history;
 
 	public function __construct(
 	$id = 0,
@@ -14,7 +15,8 @@ class Item
 	$os = '',
 	$status = '',
 	$date = '',
-	$comments = ''
+	$comments = '',
+	$history = ''
 	)
 	{
 		$this->id = $id;
@@ -23,5 +25,6 @@ class Item
 		$this->status = $status;
 		$this->date = $date;
 		$this->comments = $comments;
+		$this->history = $history;
 	}
 }

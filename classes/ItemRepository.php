@@ -19,7 +19,7 @@ class ItemRepository
 
 	protected static function init()
 	{
-		$dbRows = self::_getDb()->getRows();
+		$dbRows = self::_getDb()->getItems();
 		$dbData = array();
 		foreach ($dbRows as $row)
 		{
@@ -30,7 +30,8 @@ class ItemRepository
 						$row['OS'],
 						$row['Status'],
 						$row['Date'],
-						$row['Comments']
+						$row['Comments'],
+						$row['History']
 				)
 			);
 		}
@@ -50,10 +51,10 @@ class ItemRepository
 		return $result;
 	}
 
-	public static function freeItem($id)
+	public static function returnItem($id)
 	{
 		$db = self::_getDb();
-		$result = $db->freeItem($id, 'Free');
+		$result = $db->returnItem($id, 'Free');
 		return $result;
 	}
 }

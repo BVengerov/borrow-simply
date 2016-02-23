@@ -1,8 +1,7 @@
 # Stuff
 .phpintel
 ftpsync.settings
-angular.js
-angular-route.js
+bower_components/
 
 # Compiled source #
 ###################
