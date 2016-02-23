@@ -1,0 +1,24 @@
+{
+  "name": "borrow-simply",
+  "homepage": "https://github.com/BVengerov/borrow-simply",
+  "description": "necessary components for the app to work",
+  "main": "",
+  "moduleType": [],
+  "authors": [
+    "Borys Vengerov"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-cookies": "^1.5.0",
+    "ng-qtip2": "^1.1.1",
+    "jQuery": "^2.2.1",
+    "qtip2": "^2.2.1"
+  }
+}

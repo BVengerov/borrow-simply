@@ -1,6 +1,6 @@
 (function() {
 
-	var app = angular.module("borrowsimply", ['ngCookies']);
+	var app = angular.module("borrowsimply", ['ngCookies', 'ngQtip2']);
 
 	var $baseUrl = "services/";
 
@@ -60,7 +60,7 @@
 		}
 
 		var onError = function() {
-			getItems();
+			getItems(); //Because it's probably due to changes in DB not been synced with the model
 			$window.alert("Oops! Something went wrong :-( Please try again later.");
 		}
 
@@ -84,9 +84,8 @@
 			}
 			else
 			{
-				$window.alert("Please select your name first!");
+				$window.alert("<-- Please select your name first!");
 			}
-
 		};
 
 		$scope.getFullStatusText = function(item) {
@@ -132,8 +131,8 @@
 
 		var setUserFromCookies = function()
 		{
-			userLogin = $cookies.get('login');
 			selectedUser = undefined;
+			userLogin = $cookies.get('login');
 			if (userLogin)
 			{
 				for (user of $scope.users)
