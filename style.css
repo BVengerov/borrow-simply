@@ -3,7 +3,7 @@ table {
 	background-color: linen;
 	margin: auto;
 	text-align: center;
-	width: 80%
+	width: 100%
 }
 
 .table-title td {
@@ -15,6 +15,10 @@ td {
 	font-family: Lucida Console;
 	font-size: .7em;
 	border: 1px solid #DDD;
+}
+
+td.item-status {
+	width: 160px;
 }
 
 button {
