@@ -36,7 +36,7 @@
 				<td><span title="{{ getFullStatusText(p) }}">{{ p.status }}</span></td>
 				<td>
 					<button class='button-take' ng-show="getAvailableAction(p) == 'Take'" ng-click='takeItem(p)'>Take</button>
-					<span qtip='Не забыл поставить на зарядку? ;)' qtip-at="bottom center" qtip-my="top center" qtip-event="false" qtip-event_out="unfocus">
+					<span qtip='Не забыл поставить на зарядку? ;)' qtip-at="bottom center" qtip-my="top center" qtip-fixed="false" qtip-event_out="click unfocus mouseleave">
 						<button class='button-return' ng-click="returnItem(p)" ng-show="getAvailableAction(p) == 'Return'">Return</button>
 					</span>
 					<button class='button-taken' disabled ng-show="getAvailableAction(p) != 'Take' && getAvailableAction(p) != 'Return'">Taken</button>
