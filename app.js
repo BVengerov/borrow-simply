@@ -59,12 +59,7 @@
 					if (!angular.equals($scope.items, response.data))
 						$scope.items = response.data;
 				});
-		}
-
-		var onError = function() {
-			getItems(); //Because it's probably due to changes in DB not synced with the model
-			$window.alert("Oops! Something went wrong :-( Please try again later.");
-		}
+		};
 
 		$scope.takeItem = function(item) {
 			user = $scope.selectedUser;
@@ -83,6 +78,16 @@
 				}, onError);
 			else
 				$window.alert("<-- Please select your name first!");
+		};
+
+		$scope.updateComment = function(item, comment) {
+			if (item.comment != comment)
+				itemsService.updateComment(item, comment).then(getItems, onError);
+		};
+
+		var onError = function() {
+			getItems(); //...the error would probably be as the consequence of changes in DB not synced with the model
+			$window.alert("Oops! Something went wrong :-( Please try again later.");
 		};
 
 		$scope.getFullStatusText = function(item) {
@@ -105,12 +110,7 @@
 
 				return status + " at " + hhmm + " on " + ddnnyyyy;
 			}
-		}
-
-		$scope.updateComment = function(item, comment) {
-			if (item.comment != comment)
-				itemsService.updateComment(item, comment).then(getItems, onError);
-		}
+		};
 
 		$scope.getAvailableAction = function(item) {
 			user = $scope.selectedUser;
@@ -125,9 +125,19 @@
 				return "None";
 		};
 
+		$scope.getClassForItem = function(item) {
+			$action = $scope.getAvailableAction(item);
+			if ($action == "Return")
+				return "i-taken_by_user";
+			else if ($action == "None")
+				return "i-taken";
+			else
+				return "i-free";
+		};
+
 		$scope.storeUserLogin = function() {
 			$cookies.put('login', this.selectedUser.login);
-		}
+		};
 
 		var setUserFromCookies = function() {
 			var selectedUser = undefined;
@@ -147,23 +157,13 @@
 			// Bool flag for showing initial "please select username" qtip
 			if ($scope.selectedUser == undefined)
 				$scope.showUnknownUserAlert = true;
-		}
+		};
 
 		var getUsersAndSelectUser = function() {
 			itemsService.getUsers().then(function(response) {
 				$scope.users = response.data;
 				setUserFromCookies();
 			});
-		}
-
-		$scope.getClassForItem = function(item) {
-			$action = $scope.getAvailableAction(item);
-			if ($action == "Return")
-				return "i-taken_by_user";
-			else if ($action == "None")
-				return "i-taken";
-			else
-				return "i-free";
 		};
 
 		// Reduce update rate ten-fold when the tab is not active
@@ -179,7 +179,7 @@
 				return $interval(function() {
 				getItems();
 			}, updateInterval);
-		}
+		};
 
 		getUsersAndSelectUser();
 		getItems();
@@ -193,7 +193,6 @@
                     scope.$apply(function(){
                         scope.$eval(attrs.ngEnter, {'event': event});
                     });
-
                     event.preventDefault();
                 }
             });

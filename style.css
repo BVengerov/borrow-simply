@@ -87,6 +87,6 @@ input.input-comment {
 	text-align: center;
 }
 
-tr.i-taken td.item-status > span {
+tr.i-taken td.item-status > span, tr .item-history > span {
   border-bottom: 1px dashed #999;
 }
