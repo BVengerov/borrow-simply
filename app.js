@@ -122,7 +122,7 @@
 				)
 				return "Return";
 			else
-				return false;
+				return "None";
 		};
 
 		$scope.storeUserLogin = function() {
@@ -155,6 +155,16 @@
 				setUserFromCookies();
 			});
 		}
+
+		$scope.getClassForItem = function(item) {
+			$action = $scope.getAvailableAction(item);
+			if ($action == "Return")
+				return "i-taken_by_user";
+			else if ($action == "None")
+				return "i-taken";
+			else
+				return "i-free";
+		};
 
 		// Reduce update rate ten-fold when the tab is not active
 		angular.element($window).bind('focus', function() {

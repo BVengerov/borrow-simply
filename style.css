@@ -86,3 +86,7 @@ input.input-comment {
 	font-family: Lucida Console;
 	text-align: center;
 }
+
+tr.i-taken td.item-status > span {
+  border-bottom: 1px dashed #999;
+}

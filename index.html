@@ -33,7 +33,7 @@
 				</span>
 			</div>
 			</select>
-			<tr ng-repeat="p in items | orderBy:sortTable:sortReverse">
+			<tr ng-repeat="p in items | orderBy:sortTable:sortReverse" ng-class="getClassForItem(p)">
 				<td class="item-id">{{ p.id }}</td>
 				<td class="item-name">{{ p.name }}</td>
 				<td class="item-type">{{ p.type }}</td>
