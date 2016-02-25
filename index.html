@@ -51,7 +51,7 @@
 				</td>
 				<td class="item-comment">
 					<div ng-hide="editEnabled">
-						{{ p.comment }}
+						<span ng-dblclick="editEnabled=!editEnabled">{{ p.comment }}</span>
 						<a class="edit-comment" href="#" ng-click="editEnabled=!editEnabled">Edit</a>
 					</div>
 					<div ng-show="editEnabled">
