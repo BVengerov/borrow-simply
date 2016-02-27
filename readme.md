@@ -8,15 +8,15 @@ Currently those things are a bunch of test phones is shared by a group of users.
 
 Dependencies
 -----
-PHP 5.5+
-AngularJS 1.5+
-angular-cookies
-jQuery
-qtip2
-ng-qtip2
+PHP 5.5+  
+AngularJS 1.5+  
+angular-cookies  
+jQuery  
+qtip2  
+ng-qtip2  
 
 DB Setup
 -----
-MySQL database "items" in utf8_general_ci having two tables with the same charset:
-"phones_list": ID (INT, Unique, AI), Phone_name (TEXT), OS (TEXT), Status (TEXT), Date (DATETIME), Comments (CHAR), HISTORY (VARCHAR)
+MySQL database "items" in utf8_general_ci having two tables with the same charset:  
+"phones_list": ID (INT, Unique, AI), Phone_name (TEXT), OS (TEXT), Status (TEXT), Date (DATETIME), Comments (CHAR), HISTORY (VARCHAR)  
 "users": ID (INT, Unique, AI), Login (TEXT), Full_name (VARCHAR), Email (VARCHAR)
