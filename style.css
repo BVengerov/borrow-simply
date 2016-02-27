@@ -11,6 +11,10 @@ table {
 	font-weight: bold;
 }
 
+tr:hover td {
+	font-weight: bold;
+}
+
 td {
 	font-family: Lucida Console;
 	font-size: .7em;
