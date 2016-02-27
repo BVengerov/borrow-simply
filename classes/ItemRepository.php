@@ -26,8 +26,12 @@ class ItemRepository
 			array_push($dbData,
 					new Item(
 						$row['ID'],
-						$row['Phone_name'],
+						$row['Name'],
+						$row['Type'],
 						$row['OS'],
+						$row['Display'],
+						$row['Resolution'],
+						$row['Home'],
 						$row['Status'],
 						$row['Date'],
 						$row['Comment'],

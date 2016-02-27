@@ -2,55 +2,6 @@
 
 	var app = angular.module("borrowsimply", ['ngCookies', 'ngQtip2']);
 
-	var $baseUrl = "services/";
-
-	app.factory("itemsService", function($http) {
-		return {
-			getItems: function() {
-				return $http({
-				    method: "GET",
-				    url: $baseUrl + "getItems.php"
-				});
-			},
-			takeItem: function(item, username) {
-				return $http({
-				    method: "POST",
-				    url: $baseUrl + "takeItem.php",
-					 data: {
-					 	id: item.id,
-					 	status: "Taken by " + username
-					 },
-					 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-				});
-			},
-			returnItem: function(item) {
-				return $http({
-				    method: "POST",
-				    url: $baseUrl + "returnItem.php",
-					data: item.id,
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-				});
-			},
-			updateComment: function(item, comment) {
-				return $http({
-				    method: "POST",
-				    url: $baseUrl + "updateComment.php",
-					data: {
-						'id': item.id,
-						'comment': comment
-					},
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-				});
-			},
-			getUsers: function() {
-					return $http({
-				    method: "GET",
-				    url: $baseUrl + "getUsers.php"
-				});
-			}
-		};
-	});
-
 	app.controller("ItemController", function($scope, itemsService, $interval, $window, $cookies) {
 
 		var getItems = function() {
@@ -59,12 +10,7 @@
 					if (!angular.equals($scope.items, response.data))
 						$scope.items = response.data;
 				});
-		}
-
-		var onError = function() {
-			getItems(); //Because it's probably due to changes in DB not synced with the model
-			$window.alert("Oops! Something went wrong :-( Please try again later.");
-		}
+		};
 
 		$scope.takeItem = function(item) {
 			user = $scope.selectedUser;
@@ -83,6 +29,16 @@
 				}, onError);
 			else
 				$window.alert("<-- Please select your name first!");
+		};
+
+		$scope.updateComment = function(item, comment) {
+			if (item.comment != comment)
+				itemsService.updateComment(item, comment).then(getItems, onError);
+		};
+
+		var onError = function() {
+			getItems(); //...the error would probably be as the consequence of changes in DB not synced with the model
+			$window.alert("Oops! Something went wrong :-( Please try again later.");
 		};
 
 		$scope.getFullStatusText = function(item) {
@@ -105,12 +61,7 @@
 
 				return status + " at " + hhmm + " on " + ddnnyyyy;
 			}
-		}
-
-		$scope.updateComment = function(item, comment) {
-			if (item.comment != comment)
-				itemsService.updateComment(item, comment).then(getItems, onError);
-		}
+		};
 
 		$scope.getAvailableAction = function(item) {
 			user = $scope.selectedUser;
@@ -122,12 +73,22 @@
 				)
 				return "Return";
 			else
-				return false;
+				return "None";
+		};
+
+		$scope.getClassForItem = function(item) {
+			$action = $scope.getAvailableAction(item);
+			if ($action == "Return")
+				return "i-taken_by_user";
+			else if ($action == "None")
+				return "i-taken";
+			else
+				return "i-free";
 		};
 
 		$scope.storeUserLogin = function() {
 			$cookies.put('login', this.selectedUser.login);
-		}
+		};
 
 		var setUserFromCookies = function() {
 			var selectedUser = undefined;
@@ -147,14 +108,14 @@
 			// Bool flag for showing initial "please select username" qtip
 			if ($scope.selectedUser == undefined)
 				$scope.showUnknownUserAlert = true;
-		}
+		};
 
 		var getUsersAndSelectUser = function() {
 			itemsService.getUsers().then(function(response) {
 				$scope.users = response.data;
 				setUserFromCookies();
 			});
-		}
+		};
 
 		// Reduce update rate ten-fold when the tab is not active
 		angular.element($window).bind('focus', function() {
@@ -169,11 +130,24 @@
 				return $interval(function() {
 				getItems();
 			}, updateInterval);
-		}
+		};
 
 		getUsersAndSelectUser();
 		getItems();
 		itemsRefresh = startRefreshingItems(1000);
 	});
+
+	app.directive('ngEnter', function() {
+        return function(scope, element, attrs) {
+            element.bind("keydown keypress", function(event) {
+                if(event.which === 13) {
+                    scope.$apply(function(){
+                        scope.$eval(attrs.ngEnter, {'event': event});
+                    });
+                    event.preventDefault();
+                }
+            });
+        };
+    });
 })();
 
