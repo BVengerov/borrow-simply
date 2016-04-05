@@ -1,11 +1,11 @@
 <?php
 	class DbObj
 	{
-		private $_host = '127.0.0.1';
+		private $_host = 'localhost';
 		private $_dbName = 'items';
 		private $_charset = 'utf8';
-		private $_username = 'bvengerov';
-		private $_password = 'root';
+		private $_username = 'root';
+		private $_password = '';
 		private $_tableNameItems = 'phones_list';
 		private $_tableNameUsers = 'users';
 

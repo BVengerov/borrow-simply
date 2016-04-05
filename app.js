@@ -47,7 +47,8 @@
 				return status;
 			else {
 				// Format date into readable format
-				var date = new Date(item.date);
+				var itemDate = item.date.replace(/-/g, '/'); // Apparently, Date in Chrome is more flexible
+				var date = new Date(itemDate);
 				var hh = date.getHours();
 				var mm = date.getMinutes();
 				if (mm < 10)
