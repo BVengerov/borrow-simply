@@ -36,6 +36,17 @@
 				itemsService.updateComment(item, comment).then(getItems, onError);
 		};
 
+		$scope.addNewItem = function(item) {
+			if (item === undefined)
+			{
+				$window.alert('Please fill info about the item');
+				return;
+			}
+
+			if ($window.confirm('Are you sure you want to add "' + item.name + '"?'))
+				itemsService.addNewItem(item).then(getItems, onError);
+		}
+
 		var onError = function() {
 			getItems(); //...the error would probably be as the consequence of changes in DB not synced with the model
 			$window.alert("Oops! Something went wrong :-( Please try again later.");

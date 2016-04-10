@@ -29,6 +29,14 @@
 					headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 				});
 			},
+			addNewItem: function(item) {
+				return $http({
+					method: "POST",
+					url: $baseUrl + "addNewItem.php",
+					data: item,
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+				})
+			},
 			updateComment: function(item, comment) {
 				return $http({
 				    method: "POST",

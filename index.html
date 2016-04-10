@@ -63,6 +63,19 @@
 				</td>
 				<td class="item-history"><span title="{{ p.history }}">See</span></td>
 			</tr>
+			<tr class="add-item">
+				<td><button class="add-item-add_button" ng-click="addNewItem(newItem)">+</button></td>
+				<td class="add-item-name"><input ng-model="newItem.name"></td>
+				<td class="add-item-type"><input ng-model="newItem.type"></td>
+				<td class="add-item-os"><input ng-model="newItem.os"></td>
+				<td class="add-item-display"><input ng-model="newItem.display"></td>
+				<td class="add-item-resolution"><input ng-model="newItem.resolution"></td>
+				<td class="add-item-home"><input ng-model="newItem.home"></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
 		</table>
 	</div>
 </body>

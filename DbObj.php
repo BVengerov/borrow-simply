@@ -1,6 +1,9 @@
 <?php
 	class DbObj
 	{
+		/* 	DB phones_list: [ID, Name, Type, OS, Display, Resolution, Home, Status, Date, Comment, History]
+			DB users: 		[ID, Login, Full_name, Email] 													*/
+
 		private $_host = 'localhost';
 		private $_dbName = 'items';
 		private $_charset = 'utf8';
@@ -8,7 +11,6 @@
 		private $_password = '';
 		private $_tableNameItems = 'phones_list';
 		private $_tableNameUsers = 'users';
-
 		private $_dbObj;
 
 		private function _getDb()
@@ -37,24 +39,45 @@
 
 		public function takeItem($id, $status)
 		{
-			$date = date('H:i d-m-Y');
+			$date = $this->_getDate();
 			$query = "UPDATE $this->_tableNameItems SET Status = '$status', Date = NOW(), History = CONCAT('$status [$date]\n',History)"
 			. " WHERE Status='Free' AND ID = $id";
-			return $this->_runUpdateQuery($query);
+			return $this->_runQuery($query);
 		}
 
 		public function returnItem($id, $status)
 		{
-			$date = date('H:i d-m-Y');
+			$date = $this->_getDate();
 			$query = "UPDATE $this->_tableNameItems SET Status='$status', Date = NOW(), History = CONCAT('Returned [$date]\n',History)"
 			. " WHERE Status!='Free' AND ID = $id";
-			return $this->_runUpdateQuery($query);
+			return $this->_runQuery($query);
+		}
+
+		public function addNewItem($item)
+		{
+			$date = $this->_getDate();
+			foreach (['name', 'type', 'os', 'display', 'resolution', 'home'] as $key)
+			{
+				if (!array_key_exists($key, $item))
+				{
+					header("HTTP/1.1 500 Internal Server Error");
+					return;
+				}
+			}
+
+			$query =
+				"INSERT INTO $this->_tableNameItems
+				(Name, Type, OS, Display, Resolution, Home, Status, Date, History)
+				VALUES
+				('{$item['name']}', '{$item['type']}', '{$item['os']}', '{$item['display']}', '{$item['resolution']}', '{$item['home']}', 'Free', NOW(), 'Phone added [$date]')";
+
+			return $this->_runQuery($query);
 		}
 
 		public function updateComment($id, $comment)
 		{
 			$query = "UPDATE $this->_tableNameItems SET Comment = '$comment' WHERE ID = '$id'";
-			return $this->_runUpdateQuery($query);
+			return $this->_runQuery($query);
 		}
 
 		private function _getAllTableData($tableName)
@@ -65,15 +88,20 @@
 			return $result;
 		}
 
-		private function _runUpdateQuery($query)
+		private function _runQuery($query)
 		{
-			// If going global, prepare & execute should be used here to be secure of SQL injection
+			//TODO If going global, prepare & execute should be used here to be secure of SQL injection
 			$statement = $this->_getDb()->query($query);
 			if (!$statement)
 			{
 				header("HTTP/1.1 500 Internal Server Error");
 			}
 			return $statement;
+		}
+
+		private function _getDate()
+		{
+			return date('H:i d-m-Y');
 		}
 	}
 ?>
