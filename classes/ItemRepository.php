@@ -62,10 +62,10 @@ class ItemRepository
 		return $result;
 	}
 
-	public static function addNewItem($item)
+	public static function addNewItem($item, $username)
 	{
 		$db = self::_getDb();
-		$result = $db->addNewItem($item);
+		$result = $db->addNewItem($item, $username);
 		return $result;
 	}
 

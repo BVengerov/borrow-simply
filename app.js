@@ -37,6 +37,7 @@
 		};
 
 		$scope.addNewItem = function(item) {
+			user = $scope.selectedUser;
 			if (item === undefined)
 			{
 				$window.alert('Please fill info about the item');
@@ -44,7 +45,7 @@
 			}
 
 			if ($window.confirm('Are you sure you want to add "' + item.name + '"?'))
-				itemsService.addNewItem(item).then(getItems, onError);
+				itemsService.addNewItem(item, user.login).then(getItems, onError);
 		}
 
 		var onError = function() {

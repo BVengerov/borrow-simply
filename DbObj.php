@@ -53,7 +53,7 @@
 			return $this->_runQuery($query);
 		}
 
-		public function addNewItem($item)
+		public function addNewItem($item, $username)
 		{
 			$date = $this->_getDate();
 			foreach (['name', 'type', 'os', 'display', 'resolution', 'home'] as $key)
@@ -69,7 +69,7 @@
 				"INSERT INTO $this->_tableNameItems
 				(Name, Type, OS, Display, Resolution, Home, Status, Date, History)
 				VALUES
-				('{$item['name']}', '{$item['type']}', '{$item['os']}', '{$item['display']}', '{$item['resolution']}', '{$item['home']}', 'Free', NOW(), 'Phone added [$date]')";
+				('{$item['name']}', '{$item['type']}', '{$item['os']}', '{$item['display']}', '{$item['resolution']}', '{$item['home']}', 'Free', NOW(), 'Phone added by {$username} [$date]')";
 
 			return $this->_runQuery($query);
 		}
