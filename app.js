@@ -98,6 +98,19 @@
 				return "i-free";
 		};
 
+		$scope.isAdmin = function() {
+			if ($scope.selectedUser === undefined)
+				return false;
+
+			var allowedUsers = ["sakharov", "sladkov", "vengerov"];
+			for (i = 0; i < allowedUsers.length; i++)
+			{
+				if (allowedUsers[i] === $scope.selectedUser.login)
+					return true;
+			}
+			return false;
+		};
+
 		$scope.storeUserLogin = function() {
 			$cookies.put('login', this.selectedUser.login);
 		};

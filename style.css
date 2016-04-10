@@ -92,7 +92,7 @@ input.input-comment {
 }
 
 .add-item input {
-	width: 90%;
+	max-width: auto;
 	margin: auto;
 	font-family: Lucida Console;
 	text-align: center;
