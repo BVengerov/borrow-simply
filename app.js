@@ -36,6 +36,18 @@
 				itemsService.updateComment(item, comment).then(getItems, onError);
 		};
 
+		$scope.addNewItem = function(item) {
+			user = $scope.selectedUser;
+			if (item === undefined)
+			{
+				$window.alert('Please fill info about the item');
+				return;
+			}
+
+			if ($window.confirm('Are you sure you want to add "' + item.name + '"?'))
+				itemsService.addNewItem(item, user.login).then(getItems, onError);
+		}
+
 		var onError = function() {
 			getItems(); //...the error would probably be as the consequence of changes in DB not synced with the model
 			$window.alert("Oops! Something went wrong :-( Please try again later.");
@@ -85,6 +97,19 @@
 				return "i-taken";
 			else
 				return "i-free";
+		};
+
+		$scope.isAdmin = function() {
+			if ($scope.selectedUser === undefined)
+				return false;
+
+			var allowedUsers = ["sakharov", "sladkov", "vengerov"];
+			for (i = 0; i < allowedUsers.length; i++)
+			{
+				if (allowedUsers[i] === $scope.selectedUser.login)
+					return true;
+			}
+			return false;
 		};
 
 		$scope.storeUserLogin = function() {
