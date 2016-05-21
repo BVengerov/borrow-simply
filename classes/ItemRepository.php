@@ -34,8 +34,10 @@ class ItemRepository
 						$row['Home'],
 						$row['Status'],
 						$row['Date'],
+						$row['Account'],
 						$row['Comment'],
-						$row['History']
+						$row['History'],
+						$row['UDID']
 				)
 			);
 		}
