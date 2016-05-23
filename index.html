@@ -29,7 +29,7 @@
 				<td class="item-actions">Actions</td>
 				<td class="item-comment">Comment</td>
 				<td class="item-history">History</td>
-				<td class="item-udid">UDID</td>
+				<td class="item-udid" ng-show="isAdmin()">UDID</td>
 			</tr>
 			<div class="styled-select">
 				<span qtip='Please select your username' qtip-visible="showUnknownUserAlert && !selectedUser" qtip-disable="selectedUser != undefined" qtip-at="center right" qtip-my="center left" qtip-event="false">
@@ -65,7 +65,7 @@
 					</div>
 				</td>
 				<td class="item-history"><span title="{{ p.history }}">See</span></td>
-				<td class="item-udid"><div>{{ p.udid }}</div></td>
+				<td class="item-udid" ng-show="isAdmin()"><div>{{ p.udid }}</div></td>
 			</tr>
 			<tr class="add-item" ng-show="showNewItem && isAdmin()">
 				<td><button class="add-item-add_button" ng-click="addNewItem(newItem); showNewItem = false">+</button></td>
