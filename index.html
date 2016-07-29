@@ -25,9 +25,11 @@
 				<td class="item-resolution"><a href="#" ng-click="sortTable='resolution'; sortReverse = !sortReverse">Resolution</a></td>
 				<td class="item-home"><a href="#" ng-click="sortTable='home'; sortReverse = !sortReverse">Home</a></td>
 				<td class="item-status"><a href="#" ng-click="sortTable='status'; sortReverse = !sortReverse">Status</a></td>
+				<td class="item-account"><a href="#" ng-click="sortTable='account'; sortReverse = !sortReverse">Account</a></td>
 				<td class="item-actions">Actions</td>
 				<td class="item-comment">Comment</td>
 				<td class="item-history">History</td>
+				<td class="item-udid" ng-show="isAdmin()">UDID</td>
 			</tr>
 			<div class="styled-select">
 				<span qtip='Please select your username' qtip-visible="showUnknownUserAlert && !selectedUser" qtip-disable="selectedUser != undefined" qtip-at="center right" qtip-my="center left" qtip-event="false">
@@ -44,6 +46,7 @@
 				<td class="item-resolution">{{ p.resolution }}</td>
 				<td class="item-home">{{ p.home }}</td>
 				<td class="item-status"><span title="{{ getFullStatusText(p) }}">{{ p.status }}</span></td>
+				<td class="item-account">{{ p.account }}</td>
 				<td class="item-actions">
 					<button class='button-take' ng-show="getAvailableAction(p) == 'Take'" ng-click='takeItem(p)'>Take</button>
 					<span qtip='Не забыл поставить на зарядку? ;)' qtip-at="bottom center" qtip-my="top center" qtip-fixed="false" qtip-event_out="click unfocus mouseleave">
@@ -62,6 +65,7 @@
 					</div>
 				</td>
 				<td class="item-history"><span title="{{ p.history }}">See</span></td>
+				<td class="item-udid" ng-show="isAdmin()"><div>{{ p.udid }}</div></td>
 			</tr>
 			<tr class="add-item" ng-show="showNewItem && isAdmin()">
 				<td><button class="add-item-add_button" ng-click="addNewItem(newItem); showNewItem = false">+</button></td>
@@ -72,9 +76,11 @@
 				<td class="add-item-resolution"><input ng-model="newItem.resolution"></td>
 				<td class="add-item-home"><input ng-model="newItem.home"></td>
 				<td></td>
+				<td class="add-item-account"><input ng-model="newItem.account"></td>
 				<td></td>
 				<td></td>
 				<td></td>
+				<td class="add-item-udid"><input ng-model="newItem.udid"></td>
 			</tr>
 		</table>
 		<button class="add-item-show_new_item_button" ng-click="showNewItem = true" ng-show="isAdmin() && !showNewItem">></button>

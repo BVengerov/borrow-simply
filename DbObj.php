@@ -54,7 +54,7 @@
 		public function addNewItem($item, $username)
 		{
 			$date = $this->_getDate();
-			foreach (['name', 'type', 'os', 'display', 'resolution', 'home'] as $key)
+			foreach (['name', 'type', 'os', 'display', 'resolution', 'home', 'account', 'udid'] as $key)
 			{
 				if (!array_key_exists($key, $item))
 				{
@@ -65,13 +65,13 @@
 
 			$query =
 				"INSERT INTO $this->_tableNameItems
-				(Name, Type, OS, Display, Resolution, Home, Status, Date, History)
+				(Name, Type, OS, Display, Resolution, Home, Status, Date, Account, History, UDID)
 				VALUES
-				(:name, :type, :os, :display, :resolution, :home, 'Free', NOW(), :history)";
+				(:name, :type, :os, :display, :resolution, :home, 'Free', NOW(), :account, :history, :udid)";
 
 			return $this->_executeQuery(
 				$query,
-				[':name'=>$item['name'], ':type'=>$item['type'], ':os'=>$item['os'], ':display'=>$item['display'], ':resolution'=>$item['resolution'], ':home'=>$item['home'], ':history'=>"Phone added by $username [$date]"]
+				[':name'=>$item['name'], ':type'=>$item['type'], ':os'=>$item['os'], ':display'=>$item['display'], ':resolution'=>$item['resolution'], ':home'=>$item['home'], ':account'=>$item['account'], ':history'=>"Phone added by $username [$date]", ':udid'=>$item['udid']]
 			);
 		}
 

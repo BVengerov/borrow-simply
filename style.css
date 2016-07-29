@@ -25,6 +25,13 @@ td.item-status {
 	width: 160px;
 }
 
+//TODO implement a working version of this
+td.item-udid>div {
+	width: 5%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
 .item-actions button {
 	text-align: center;
 	width: 100px;
