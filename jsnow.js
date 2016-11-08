@@ -66,11 +66,13 @@
            e = "<img class='snowflake' src='" + e + "' alt='jSnowFlake'>"
          }
          c.html(e).css({
+           'pointer-events': "none",
            color: n[Math.floor(Math.random() * n.length)],
            fontSize: d + "px",
            display: "block",
            position: "absolute",
            cursor: "default",
+           background: f.src,
            "z-index": t
          });
          $(u).append(c);
