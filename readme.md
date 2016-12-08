@@ -23,4 +23,4 @@ MySQL database with name **items** is used. It is in utf8_general_ci and has two
 
 How It Looks
 -----
-[[https://github.com/vengerov/repository/borrow-simply/master/how_it_looks.gif|alt=look]]
+![The look](how_it_looks.gif?raw=true)
