@@ -20,3 +20,7 @@ DB Configuration
 MySQL database with name **items** is used. It is in utf8_general_ci and has two tables with the said charset:  
 **phones_list**: ID (INT, Unique, AI), Name (TEXT), Type (TEXT), OS (TEXT), Display (TEXT), Resolution (TEXT), Home (TEXT), Status (TEXT), Date (DATETIME), Comment (CHAR), HISTORY (VARCHAR)  
 **users**: ID (INT, Unique, AI), Login (TEXT), Full_name (VARCHAR), Email (VARCHAR)
+
+How It Looks
+-----
+![The look](how_it_looks.gif?raw=true)
